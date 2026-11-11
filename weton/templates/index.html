@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Beranda - Prambot{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title judul-primbon">Beranda</h1>
+  <p class="page-subtitle">Selamat datang di Prambot — perhitungan weton, jodoh, dan hari baik sesuai primbon Jawa.</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon">🌙</div>
+    <h3>Total Neptu</h3>
+    <div class="value" id="stat-neptu">—</div>
+    <div class="trend neutral"><span>●</span> Belum dihitung</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">💞</div>
+    <h3>Cek Jodoh</h3>
+    <div class="value">—</div>
+    <div class="trend neutral"><span>●</span> Belum dicek</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📅</div>
+    <h3>Hari Baik</h3>
+    <div class="value">—</div>
+    <div class="trend neutral"><span>●</span> Belum dicek</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📄</div>
+    <h3>Laporan</h3>
+    <div class="value">0</div>
+    <div class="trend neutral"><span>●</span> Belum dicetak</div>
+  </div>
+</div>
+
+<!-- Quick Access Cards -->
+<div class="cards-grid">
+  <div class="card batik-border">
+    <div class="card-header">
+      <div class="card-icon">🔮</div>
+      <div class="card-title">Hitung Weton</div>
+    </div>
+    <div class="card-body">
+      <p>Masukkan nama dan tanggal lahir untuk melihat weton, neptu, dan gambaran watak Anda sesuai primbon Jawa.</p>
+      <div class="btn-group" style="margin-top: 1rem;">
+        <a href="{{ url_for('hitung') }}" class="btn btn-primary">Mulai Hitung</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card batik-border">
+    <div class="card-header">
+      <div class="card-icon">💞</div>
+      <div class="card-title">Cek Jodoh (Pancasuda)</div>
+    </div>
+    <div class="card-body">
+      <p>Bandingkan neptu dua orang untuk mengetahui tingkat keselarasan jodoh menurut Pancasuda.</p>
+      <div class="btn-group" style="margin-top: 1rem;">
+        <a href="{{ url_for('jodoh') }}" class="btn btn-primary">Cek Sekarang</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card batik-border">
+    <div class="card-header">
+      <div class="card-icon">📅</div>
+      <div class="card-title">Hari Baik Acara</div>
+    </div>
+    <div class="card-body">
+      <p>Cari hari baik dalam 30 hari ke depan untuk acara pernikahan, usaha, atau acara penting lainnya.</p>
+      <div class="btn-group" style="margin-top: 1rem;">
+        <a href="{{ url_for('hari_baik') }}" class="btn btn-primary">Lihat Rekomendasi</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card batik-border wayang-dekor">
+    <div class="card-header">
+      <div class="card-icon">📄</div>
+      <div class="card-title">Cetak Laporan Primbon</div>
+    </div>
+    <div class="card-body">
+      <p>Unduh laporan PDF lengkap dengan analisis weton dan watak sesuai primbon Jawa tradisional.</p>
+      <div class="btn-group" style="margin-top: 1rem;">
+        <a href="#" class="btn btn-outline">Unduh PDF</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="garis-pemisah">
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon">ℹ️</div>
+    <div class="card-title">Tentang Prambot</div>
+  </div>
+  <div class="card-body teks-primbon">
+    <p>Prambot adalah aplikasi perhitungan weton Jawa berbasis Python dan Flask. Semua perhitungan berdasarkan tabel primbon tradisional yang tersimpan di <code>utils/konstanta.py</code>.</p>
+    <p><strong>Rumus:</strong></p>
+    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+      <li>Neptu = nilai hari + nilai pasaran</li>
+      <li>Jodoh: (neptu A + neptu B) mod 7 → Pancasuda</li>
+      <li>Hari baik: (neptu profil + neptu hari acara) mod 5</li>
+    </ul>
+    <p style="margin-top: 1rem; font-size: 0.85rem; color: #6B7280;">Catatan: Tafsir primbon bervariasi antar sumber dan bersifat hiburan/budaya, bukan kajian ilmiah.</p>
+  </div>
+</div>
+{% endblock %}

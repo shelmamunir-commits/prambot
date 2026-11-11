@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+
+{% block title %}Hasil Weton Lengkap — {{ nama }} — Prambot{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header" style="animation: fadeInDown 0.5s ease both;">
+  <div class="page-title-accent"></div>
+  <h1 class="page-title judul-primbon">Hasil Perhitungan Weton Lengkap</h1>
+  <p class="page-subtitle">Analisis mendalam weton, pawukon, dan perwatakan untuk <strong>{{ nama }}</strong> berdasarkan himpunan data Primbon Jawa &amp; Ki Demang Sokowaten.</p>
+</div>
+
+<!-- ================= HERO RESULT CARD ================= -->
+<div class="result-card">
+  <div class="result-card-shimmer"></div>
+  <div class="result-orb-2"></div>
+  <div class="result-card-wayang"></div>
+
+  <!-- Header Ringkasan -->
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;">
+    <div>
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); margin-bottom: 0.3rem; font-weight: 600;">
+        Profil Primbon Kelahiran
+      </div>
+      <h2 style="margin-bottom: 0.2rem; line-height: 1.2;">{{ nama }}</h2>
+      <div style="font-size: 0.95rem; color: var(--emas-terang); font-family: 'Lora', Georgia, serif; letter-spacing: 0.03em;">
+        {{ primbon.pawukon.hari }} {{ primbon.pawukon.pasaran }} ({{ primbon.pawukon.hari_kuno }}) &bull; Wuku {{ primbon.pawukon.wuku }}
+      </div>
+      <div style="font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-top: 0.3rem;">
+        <span>📅 {{ primbon.tanggal }}</span>
+        <span style="margin: 0 0.4rem;">|</span>
+        <span>ꦗ {{ primbon.pawukon.tanggal_jawa }}</span>
+        <span style="margin: 0 0.4rem;">|</span>
+        <span>Tahun {{ primbon.pawukon.tahun_jawa }}</span>
+      </div>
+    </div>
+    <div style="background: rgba(201,162,39,0.18); border: 1.5px solid rgba(201,162,39,0.4); border-radius: 14px; padding: 0.85rem 1.4rem; text-align: center; flex-shrink: 0; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+      <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); margin-bottom: 0.2rem; font-weight: 600;">Total Neptu</div>
+      <div class="neptu-big" style="font-size: 2.2rem !important;">{{ primbon.pawukon.total_neptu }}</div>
+      <div style="font-size: 0.7rem; color: rgba(255,255,255,0.5);">{{ primbon.pawukon.neptu_hari }} + {{ primbon.pawukon.neptu_pasaran }}</div>
+    </div>
+  </div>
+
+  <!-- Grid Parameter Kunci -->
+  <div class="result-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+    <div class="result-item">
+      <div class="label">Wuku</div>
+      <div class="value" style="font-size: 1rem;">{{ primbon.pawukon.wuku }}</div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Ke-{{ primbon.pawukon.wuku_index }} dari 30</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Paarasan</div>
+      <div class="value" style="font-size: 0.95rem;">{{ primbon.pawukon.paarasan.nama }}</div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Watak Alami</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Rakam</div>
+      <div class="value" style="font-size: 0.95rem;">{{ primbon.pawukon.rakam.nama }}</div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Kecenderungan Nasib</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Pancasuda</div>
+      <div class="value" style="font-size: 0.95rem;">{{ primbon.pawukon.pancasuda.nama }}</div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Budi Pekerti</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Pranata Mangsa</div>
+      <div class="value" style="font-size: 0.95rem;">{{ primbon.pawukon.mangsa.nama }}</div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">{{ primbon.pawukon.mangsa.candra }}</div>
+    </div>
+  </div>
+
+  <div class="garis-pemisah"></div>
+
+  <!-- Intisari Watak & Paarasan -->
+  <div class="watak-box">
+    <h4>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      Karakter Paarasan: {{ primbon.pawukon.paarasan.nama }}
+    </h4>
+    <p style="font-size: 0.88rem; line-height: 1.7; color: rgba(255,255,255,0.9);">
+      {{ primbon.pawukon.paarasan.arti }}
+    </p>
+    <div style="margin-top: 0.75rem; font-size: 0.82rem; color: rgba(255,255,255,0.7); display: flex; flex-wrap: wrap; gap: 0.75rem;">
+      <span><strong>Rakam:</strong> {{ primbon.pawukon.rakam.arti }}</span>
+      <span><strong>Pancasuda:</strong> {{ primbon.pawukon.pancasuda.arti }}</span>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="btn-group" style="margin-top: 1.75rem;">
+    <a href="{{ url_for('laporan', nama=nama) }}" class="btn btn-emas">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Cetak Laporan PDF
+    </a>
+    <a href="{{ url_for('jodoh') }}" class="btn" style="background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.2);">
+      💖 Cek Jodoh Pasangan
+    </a>
+    <a href="{{ url_for('hari_baik') }}" class="btn" style="background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.12);">
+      📅 Cari Hari Baik Acara
+    </a>
+    <a href="{{ url_for('hitung') }}" class="btn" style="background: transparent; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.15);">
+      ← Hitung Weton Lain
+    </a>
+  </div>
+</div>
+
+<!-- ================= 1. TABEL SIKLUS ASTROLOGI JAWA (WEWARAN) ================= -->
+<div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem; animation-delay: 0.15s;">
+  <div class="card-header" style="margin-bottom: 1.25rem;">
+    <div class="card-icon">🏛️</div>
+    <div>
+      <div class="card-title">Siklus Wewaran &amp; Prabot Pawukon (Ki Demang Sokowaten)</div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">Klasifikasi peredaran hari tradisional Jawa: Sadwara, Hastawara, dan Sangawara</div>
+    </div>
+  </div>
+
+  <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 0;">
+    <!-- Sadwara -->
+    <div style="background: var(--krema); border: 1px solid var(--krema-tua); border-radius: 14px; padding: 1.2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--abu-sedang); font-weight: 600;">Sadwara (Paringkelan)</span>
+        <span class="badge badge-neutral" style="font-size: 0.65rem;">6 Harian</span>
+      </div>
+      <div style="font-family: 'Lora', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--sogan-dark);">
+        {{ primbon.pawukon.sadwara.nama }} <span style="font-size: 0.85rem; font-weight: normal; color: var(--abu-tua);">({{ primbon.pawukon.sadwara.lambang }})</span>
+      </div>
+      <p style="font-size: 0.82rem; color: var(--abu-tua); line-height: 1.6; margin-top: 0.4rem;">
+        {{ primbon.pawukon.sadwara.arti }}
+      </p>
+    </div>
+
+    <!-- Hastawara -->
+    <div style="background: var(--krema); border: 1px solid var(--krema-tua); border-radius: 14px; padding: 1.2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--abu-sedang); font-weight: 600;">Hastawara (Padewan)</span>
+        <span class="badge badge-neutral" style="font-size: 0.65rem;">8 Harian</span>
+      </div>
+      <div style="font-family: 'Lora', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--sogan-dark);">
+        {{ primbon.pawukon.hastawara.nama }} <span style="font-size: 0.85rem; font-weight: normal; color: var(--abu-tua);">({{ primbon.pawukon.hastawara.dewa }})</span>
+      </div>
+      <p style="font-size: 0.82rem; color: var(--abu-tua); line-height: 1.6; margin-top: 0.4rem;">
+        {{ primbon.pawukon.hastawara.arti }}
+      </p>
+    </div>
+
+    <!-- Sangawara -->
+    <div style="background: var(--krema); border: 1px solid var(--krema-tua); border-radius: 14px; padding: 1.2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--abu-sedang); font-weight: 600;">Sangawara (Padangon)</span>
+        <span class="badge badge-neutral" style="font-size: 0.65rem;">9 Harian</span>
+      </div>
+      <div style="font-family: 'Lora', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--sogan-dark);">
+        {{ primbon.pawukon.sangawara.nama }} <span style="font-size: 0.85rem; font-weight: normal; color: var(--abu-tua);">({{ primbon.pawukon.sangawara.lambang }})</span>
+      </div>
+      <p style="font-size: 0.82rem; color: var(--abu-tua); line-height: 1.6; margin-top: 0.4rem;">
+        {{ primbon.pawukon.sangawara.arti }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 2. DETAIL WUKU KELAHIRAN ================= -->
+{% if primbon.pawukon.wuku_detail %}
+<div class="card batik-border" style="padding: 1.75rem; margin-bottom: 1.5rem; animation-delay: 0.2s;">
+  <div class="card-header" style="margin-bottom: 1.25rem;">
+    <div class="card-icon">🪶</div>
+    <div>
+      <div class="card-title">Rincian Wuku: {{ primbon.pawukon.wuku }}</div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">Dewa pelindung, simbol alam, aral bahaya, dan petunjuk sesaji keselamatan</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;">
+    {% if primbon.pawukon.wuku_detail.dewa %}
+    <div style="padding: 0.9rem; background: var(--krema); border-radius: 12px; border: 1px solid var(--krema-tua);">
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--abu-sedang); font-weight: 600;">Dewa Bumi</div>
+      <div style="font-size: 0.88rem; font-weight: 600; color: var(--sogan-dark); margin-top: 2px;">{{ primbon.pawukon.wuku_detail.dewa }}</div>
+    </div>
+    {% endif %}
+
+    {% if primbon.pawukon.wuku_detail.pohon %}
+    <div style="padding: 0.9rem; background: var(--krema); border-radius: 12px; border: 1px solid var(--krema-tua);">
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--abu-sedang); font-weight: 600;">Pohon Pelindung</div>
+      <div style="font-size: 0.85rem; color: var(--hitam-tua); margin-top: 2px;">{{ primbon.pawukon.wuku_detail.pohon }}</div>
+    </div>
+    {% endif %}
+
+    {% if primbon.pawukon.wuku_detail.burung %}
+    <div style="padding: 0.9rem; background: var(--krema); border-radius: 12px; border: 1px solid var(--krema-tua);">
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--abu-sedang); font-weight: 600;">Burung Perlambang</div>
+      <div style="font-size: 0.85rem; color: var(--hitam-tua); margin-top: 2px;">{{ primbon.pawukon.wuku_detail.burung }}</div>
+    </div>
+    {% endif %}
+
+    {% if primbon.pawukon.wuku_detail.gedhong %}
+    <div style="padding: 0.9rem; background: var(--krema); border-radius: 12px; border: 1px solid var(--krema-tua);">
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--abu-sedang); font-weight: 600;">Letak Gedhong</div>
+      <div style="font-size: 0.85rem; color: var(--hitam-tua); margin-top: 2px;">{{ primbon.pawukon.wuku_detail.gedhong }}</div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Ciri & Aral -->
+  <div style="background: rgba(142,90,46,0.04); border-left: 3px solid var(--sogan); border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 1rem;">
+    {% if primbon.pawukon.wuku_detail.aral %}
+    <div style="margin-bottom: 0.5rem; font-size: 0.85rem;">
+      <strong style="color: var(--merah);">⚠️ Aral / Halangan yang Perlu Diwaspadai:</strong>
+      <span style="color: var(--abu-tua);"> {{ primbon.pawukon.wuku_detail.aral }}</span>
+    </div>
+    {% endif %}
+    {% if primbon.pawukon.wuku_detail.sesaji %}
+    <div style="font-size: 0.85rem;">
+      <strong style="color: var(--sogan-dark);">🍚 Doa &amp; Sedekah Keselamatan:</strong>
+      <span style="color: var(--abu-tua);"> {{ primbon.pawukon.wuku_detail.sesaji }} {% if primbon.pawukon.wuku_detail.doa %}(Do'a: {{ primbon.pawukon.wuku_detail.doa }}){% endif %}</span>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if primbon.pawukon.wuku_detail.kala or primbon.pawukon.wuku_detail.anjuran %}
+  <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.82rem; color: var(--abu-tua);">
+    {% if primbon.pawukon.wuku_detail.kala %}
+    <div style="flex: 1; min-width: 240px; background: var(--krema); padding: 0.75rem 1rem; border-radius: 10px;">
+      <strong style="color: var(--sogan-dark);">🧭 Kala Jaya Bumi:</strong> {{ primbon.pawukon.wuku_detail.kala }}
+    </div>
+    {% endif %}
+    {% if primbon.pawukon.wuku_detail.anjuran %}
+    <div style="flex: 2; min-width: 240px; background: var(--krema); padding: 0.75rem 1rem; border-radius: 10px;">
+      <strong style="color: var(--sogan-dark);">📌 Anjuran &amp; Larangan:</strong> {{ primbon.pawukon.wuku_detail.anjuran }}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+<!-- ================= 3. ANALISIS WATAK KOMPREHENSIF (PRIMBON.COM) ================= -->
+<div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem; animation-delay: 0.25s;">
+  <div class="card-header" style="margin-bottom: 1.25rem;">
+    <div class="card-icon">🎭</div>
+    <div>
+      <div class="card-title">Karakter &amp; Watak Kelahiran Lengkap (Primbon.com)</div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">Tafsiran psikologis dan sifat batiniah berdasarkan weton kelahiran</div>
+    </div>
+  </div>
+
+  <div style="background: var(--krema); border: 1px solid var(--krema-tua); border-radius: 14px; padding: 1.4rem; margin-bottom: 1.25rem;">
+    <h4 style="font-family: 'Lora', Georgia, serif; font-size: 1rem; color: var(--sogan-dark); margin-bottom: 0.6rem;">
+      Gambaran Sifat Weton {{ primbon.pawukon.hari }} {{ primbon.pawukon.pasaran }}
+    </h4>
+    <p style="font-size: 0.9rem; line-height: 1.8; color: var(--hitam-tua);">
+      {{ primbon.watak_lengkap }}
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+    <!-- Hari Naas -->
+    <div style="background: rgba(165,52,40,0.04); border: 1px solid rgba(165,52,40,0.15); border-radius: 12px; padding: 1.1rem;">
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--merah); font-weight: 700; margin-bottom: 0.3rem;">
+        ⚠️ Hari Naas (Apes) yang Harus Diwaspadai
+      </div>
+      <div style="font-size: 0.92rem; font-weight: 600; color: var(--hitam-tua);">
+        {{ primbon.hari_naas }}
+      </div>
+      <div style="font-size: 0.75rem; color: var(--abu-tua); margin-top: 0.3rem;">
+        Hindari menggelar hajatan besar atau transaksi spekulatif pada hari-hari ini.
+      </div>
+    </div>
+
+    <!-- Arah Hadap Rumah & Batu -->
+    <div style="background: rgba(61,122,84,0.04); border: 1px solid rgba(61,122,84,0.15); border-radius: 12px; padding: 1.1rem;">
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--hijau); font-weight: 700; margin-bottom: 0.3rem;">
+        🧭 Arah Rezeki &amp; Hadap Rumah yang Cocok
+      </div>
+      <div style="font-size: 0.92rem; font-weight: 600; color: var(--hitam-tua);">
+        {{ primbon.arah_rumah }}
+      </div>
+      <div style="font-size: 0.75rem; color: var(--abu-tua); margin-top: 0.3rem;">
+        Arah Naga Dina: {{ primbon.naga_dina }}
+      </div>
+    </div>
+
+    <!-- Batu Akik / Permata -->
+    <div style="background: rgba(201,162,39,0.06); border: 1px solid rgba(201,162,39,0.25); border-radius: 12px; padding: 1.1rem;">
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sogan); font-weight: 700; margin-bottom: 0.3rem;">
+        💎 Batu Permata Pembawa Hoki
+      </div>
+      <div style="font-size: 0.88rem; font-weight: 600; color: var(--hitam-tua);">
+        {{ primbon.batu_permata }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 4. KARIER, BISNIS & REZEKI ================= -->
+<div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-bottom: 1.5rem;">
+  <!-- Karier -->
+  <div class="card" style="padding: 1.5rem; animation-delay: 0.3s;">
+    <div class="card-header" style="margin-bottom: 1rem;">
+      <div class="card-icon">💼</div>
+      <div>
+        <div class="card-title">Pekerjaan &amp; Karier yang Cocok</div>
+        <div style="font-size: 0.72rem; color: var(--abu-sedang);">Bidang profesi yang selaras dengan energi weton</div>
+      </div>
+    </div>
+    <p style="font-size: 0.88rem; line-height: 1.7; color: var(--hitam-tua);">
+      {{ primbon.karier }}
+    </p>
+  </div>
+
+  <!-- Hubungan Bisnis -->
+  <div class="card" style="padding: 1.5rem; animation-delay: 0.35s;">
+    <div class="card-header" style="margin-bottom: 1rem;">
+      <div class="card-icon">📈</div>
+      <div>
+        <div class="card-title">Karakter dalam Berbisnis</div>
+        <div style="font-size: 0.72rem; color: var(--abu-sedang);">Pedoman mengelola usaha dan kemitraan</div>
+      </div>
+    </div>
+    <p style="font-size: 0.88rem; line-height: 1.7; color: var(--hitam-tua);">
+      {{ primbon.bisnis }}
+    </p>
+  </div>
+
+  <!-- Gambaran Rezeki -->
+  <div class="card" style="padding: 1.5rem; animation-delay: 0.4s;">
+    <div class="card-header" style="margin-bottom: 1rem;">
+      <div class="card-icon">💰</div>
+      <div>
+        <div class="card-title">Gambaran Rezeki (Hoki)</div>
+        <div style="font-size: 0.72rem; color: var(--abu-sedang);">Potensi kelancaran nafkah dan kemakmuran</div>
+      </div>
+    </div>
+    <p style="font-size: 0.88rem; line-height: 1.7; color: var(--hitam-tua);">
+      {{ primbon.rezeki }}
+    </p>
+  </div>
+</div>
+
+<!-- ================= 5. FLUKTUASI REZEKI PAL SRIGATI ================= -->
+{% if primbon.pal_srigati %}
+<div class="card batik-border" style="padding: 1.75rem; margin-bottom: 2rem; animation-delay: 0.45s;">
+  <div class="card-header" style="margin-bottom: 1.25rem;">
+    <div class="card-icon">📊</div>
+    <div>
+      <div class="card-title">Fluktuasi Siklus Rezeki Pal Srigati (Siklus 6 Tahunan)</div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">
+        Proyeksi fase pasang surut keberuntungan sepanjang rentang usia 1 hingga 96 tahun (Kitab Betaljemur Adammakna)
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.85rem;">
+    {% for entry in primbon.pal_srigati %}
+    <div style="background: var(--krema); border: 1px solid var(--krema-tua); border-radius: 12px; padding: 1rem 1.15rem; transition: transform 0.2s ease;">
+      <p style="font-size: 0.84rem; line-height: 1.6; color: var(--hitam-tua); margin: 0;">
+        {{ entry }}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

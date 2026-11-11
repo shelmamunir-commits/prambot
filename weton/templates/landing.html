@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#3D2010">
+  <title>Sugeng Rawuh — PRAMBOT WETON</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ============ BASE ============ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --sogan: #8E5A2E;
+      --sogan-dark: #3D2010;
+      --sogan-terang: #C48A4E;
+      --emas: #C9A227;
+      --emas-terang: #E8C26E;
+      --emas-shimmer: #F5D98A;
+      --krema: #F8F4EC;
+      --krema-tua: #EDE0CC;
+      --hitam: #1A1210;
+      --abu: #7A6A5A;
+      --putih: #FFFFFF;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--sogan-dark);
+      color: var(--putih);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      cursor: url('/static/burung.png') 0 0, auto;
+    }
+
+    a, button { cursor: url('/static/burung.png') 0 0, pointer !important; }
+
+    /* ============ KEYFRAMES ============ */
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33%       { transform: translateY(-10px) rotate(1deg); }
+      66%       { transform: translateY(-5px) rotate(-0.5deg); }
+    }
+    @keyframes float-reverse {
+      0%, 100% { transform: translateY(0) rotate(0deg) scaleX(-1); }
+      33%       { transform: translateY(-8px) rotate(-1deg) scaleX(-1); }
+      66%       { transform: translateY(-4px) rotate(0.5deg) scaleX(-1); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1; }
+    }
+    @keyframes orbit {
+      from { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes particle-rise {
+      0%   { opacity: 0; transform: translateY(0) scale(0); }
+      20%  { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-80px) scale(1.5); }
+    }
+    @keyframes line-grow {
+      from { width: 0; opacity: 0; }
+      to   { width: 60px; opacity: 1; }
+    }
+
+    /* ============ BACKGROUND ============ */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Rich dark gradient bg */
+    .bg-layer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 100% 80% at 20% 20%, rgba(142, 90, 46, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 100% at 80% 80%, rgba(93, 58, 26, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 50% 10%, rgba(201, 162, 39, 0.08) 0%, transparent 50%),
+        linear-gradient(170deg, #1A0D05 0%, #3D2010 30%, #5D3A1A 60%, #8E5A2E 100%);
+    }
+
+    /* Batik overlay */
+    .bg-layer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('/static/svg/batik.svg') repeat;
+      background-size: 100px;
+      opacity: 0.03;
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: glow-pulse 4s ease-in-out infinite;
+    }
+    .orb-1 {
+      width: 400px; height: 400px;
+      top: -100px; left: -100px;
+      background: radial-gradient(circle, rgba(201, 162, 39, 0.12) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 300px; height: 300px;
+      bottom: -50px; right: -50px;
+      background: radial-gradient(circle, rgba(142, 90, 46, 0.2) 0%, transparent 70%);
+      animation-delay: -2s;
+    }
+    .orb-3 {
+      width: 200px; height: 200px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(201, 162, 39, 0.06) 0%, transparent 70%);
+      animation-delay: -1s;
+    }
+
+    /* ============ SCROLL CUSTOM ============ */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--sogan-dark); }
+    ::-webkit-scrollbar-thumb { background: rgba(201, 162, 39, 0.3); border-radius: 3px; }
+
+    /* ============ LAYOUT ============ */
+    .wrapper {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============ WAYANG ORNAMENTS ============ */
+    .wayang-left, .wayang-right {
+      position: fixed;
+      bottom: 0;
+      width: 180px;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1s ease 0.5s;
+    }
+    .wayang-left {
+      left: -20px;
+      animation: float 10s ease-in-out infinite;
+    }
+    .wayang-right {
+      right: -20px;
+      animation: float-reverse 10s ease-in-out infinite;
+      animation-delay: -5s;
+    }
+    body.loaded .wayang-left,
+    body.loaded .wayang-right {
+      opacity: 0.12;
+    }
+
+    /* ============ HEADER ============ */
+    .header {
+      padding: 1.4rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+      animation: fadeInDown 0.6s ease both;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 2.5rem;
+      right: 2.5rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.3), transparent);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+    }
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(201, 162, 39, 0.4);
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(10px);
+  /* Menjaga warna teks aksara Jawa di dalamnya tetap emas di semua halaman */
+  color: var(--emas-terang);
+}
+
+/* Memastikan aksara Jawa 'ꦗ' terkunci ke warna emas shimmer */
+.brand-logo span {
+  color: var(--emas-terang) !important;
+  text-shadow: 0 0 10px rgba(201, 162, 39, 0.4);
+}
+
+.brand-logo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/static/svg/batik.svg') repeat;
+  background-size: 20px;
+  opacity: 0.08;
+}
+
+.brand:hover .brand-logo {
+  transform: rotate(10deg) scale(1.1);
+  border-color: var(--emas-terang, #f3c649);
+  box-shadow: 0 0 20px rgba(201, 162, 39, 0.3);
+  color: var(--emas-shimmer);
+}
+
+    .brand-name {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--emas-terang), var(--emas-shimmer), var(--emas-terang));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+    }
+
+    .brand-tagline {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+
+    .header-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201, 162, 39, 0.25);
+      border-radius: 100px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.06em;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+
+    .header-badge:hover {
+      background: rgba(201, 162, 39, 0.1);
+      border-color: rgba(201, 162, 39, 0.4);
+      color: var(--emas-terang);
+    }
+
+    .header-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--emas-terang);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(201, 162, 39, 0.6);
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    /* ============ HERO ============ */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    /* Decorative ring */
+    .hero-ring {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 162, 39, 0.08);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: spin-slow 30s linear infinite;
+    }
+
+    .hero-ring::before {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--emas-terang);
+      border-radius: 50%;
+      top: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px rgba(201, 162, 39, 0.8);
+    }
+
+    .hero-ring-2 {
+      width: 700px;
+      height: 700px;
+      border-color: rgba(220, 181, 52, 0.04);
+      animation-direction: reverse;
+      animation-duration: 50s;
+    }
+
+    /* Welcome pill */
+    .welcome-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 1.25rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--emas-terang);
+      letter-spacing: 0.04em;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(16px);
+      animation: fadeInDown 0.7s ease 0.2s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-pill::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.1), transparent);
+      animation: shimmer 3s linear infinite;
+    }
+
+    .welcome-pill-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-pill-sep {
+      width: 1px;
+      height: 14px;
+      background: rgba(201, 162, 39, 0.4);
+    }
+
+    /* ============ HERO TITLE ============ */
+    .hero-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+      animation: fadeInUp 0.8s ease 0.3s both;
+      max-width: 820px;
+    }
+
+    .hero-title-line1 {
+      display: block;
+      background: linear-gradient(135deg, var(--emas-terang) 0%, var(--emas-shimmer) 50%, var(--emas-terang) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 5s linear infinite;
+    }
+
+    .hero-title-sub {
+      display: block;
+      font-size: clamp(1.3rem, 3.2vw, 2.1rem);
+      font-weight: 500;
+      color: #f7e6c4;
+      letter-spacing: 0.02em;
+      margin-top: 0.5rem;
+      font-family: 'Lora', Georgia, serif;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.35);
+    }
+
+    /* Decorative line under title */
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0 auto 1.5rem;
+      animation: fadeIn 1s ease 0.5s both;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .hero-divider-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--emas-terang));
+      animation: line-grow 1s ease 0.8s both;
+    }
+
+    .hero-divider-line.right {
+      background: linear-gradient(90deg, var(--emas-terang), transparent);
+    }
+
+    .hero-divider-ornament {
+      font-size: 1.1rem;
+      color: var(--emas-terang);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 3.5rem;
+      animation: fadeInUp 0.8s ease 0.4s both;
+      font-weight: 400;
+    }
+
+    .hero-desc strong {
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+    }
+
+    /* ============ FEATURE CARDS ============ */
+    .cards-wrapper {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      animation: fadeInUp 0.8s ease 0.5s both;
+    }
+
+    .feat-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      cursor: url('/static/burung.png') 0 0, pointer !important;
+      text-decoration: none;
+    }
+
+    /* Card shimmer top */
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--emas-terang), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Card glow on hover */
+    .feat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center top, rgba(201, 162, 39, 0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .feat-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: rgba(201, 162, 39, 0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(201, 162, 39, 0.15);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .feat-card:hover::before,
+    .feat-card:hover::after {
+      opacity: 1;
+    }
+
+    /* Wayang mini in card corner */
+    .feat-card-wayang {
+      position: absolute;
+      bottom: -10px;
+      right: -10px;
+      width: 80px;
+      height: 100px;
+      background: url('/static/svg/wayang.svg') no-repeat center/contain;
+      opacity: 0.05;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .feat-card:hover .feat-card-wayang {
+      opacity: 0.12;
+      transform: scale(1.1) translateY(-4px);
+    }
+
+    .feat-card-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .feat-card-icon-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: rgba(201, 162, 39, 0.12);
+      border: 1px solid rgba(201, 162, 39, 0.2);
+    }
+
+    .feat-card:hover .feat-card-icon-wrap {
+      transform: rotate(-8deg) scale(1.15);
+    }
+
+    .feat-card-icon-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 18px;
+      border: 1px solid rgba(201, 162, 39, 0.1);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feat-card:hover .feat-card-icon-wrap::after {
+      opacity: 1;
+    }
+
+    .feat-card-icon-emoji {
+      position: relative;
+      z-index: 1;
+    }
+
+    .feat-card-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--putih);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0;
+      line-height: 1.3;
+    }
+
+    .feat-card-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      margin-bottom: auto;
+      flex: 1;
+    }
+
+    .feat-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      padding: 0.65rem 1.25rem;
+      background: rgba(201, 162, 39, 0.12);
+      border: 1px solid rgba(201, 162, 39, 0.25);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--emas-terang);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      letter-spacing: 0.03em;
+      position: relative;
+      z-index: 10;
+    }
+
+    .feat-card-cta:hover,
+    .feat-card:hover .feat-card-cta {
+      background: rgba(201, 162, 39, 0.22);
+      border-color: rgba(201, 162, 39, 0.5);
+      transform: translateX(3px);
+      color: var(--emas-shimmer);
+    }
+
+    .feat-card-cta-arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .feat-card:hover .feat-card-cta-arrow {
+      transform: translateX(3px);
+    }
+
+    /* Card number badge */
+    .feat-card-num {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============ BOTTOM BANNER ============ */
+    .bottom-banner {
+      max-width: 980px;
+      margin: 0 auto 2rem;
+      padding: 1.5rem 2rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      backdrop-filter: blur(16px);
+      animation: fadeInUp 0.8s ease 0.7s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bottom-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('/static/svg/batik.svg') repeat;
+      background-size: 60px;
+      opacity: 0.025;
+      pointer-events: none;
+    }
+
+    .bottom-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .bottom-banner-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(201, 162, 39, 0.1);
+      border: 1px solid rgba(201, 162, 39, 0.25);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .bottom-banner-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--putih);
+      margin-bottom: 0.2rem;
+      letter-spacing: 0;
+    }
+
+    .bottom-banner-desc {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+    }
+
+    .bottom-banner-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      background: linear-gradient(135deg, var(--sogan) 0%, var(--sogan-dark) 100%);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--emas-terang);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+      position: relative;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .bottom-banner-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.3), 0 0 0 1px rgba(201, 162, 39, 0.3);
+      color: var(--emas-shimmer);
+    }
+
+    /* ============ STAT ROW ============ */
+    .stats-row {
+      max-width: 980px;
+      margin: 0 auto 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      animation: fadeIn 1s ease 0.6s both;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-item {
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.2s ease;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-item:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .stat-num {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--emas-terang), var(--emas-shimmer));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    /* ============ FOOTER ============ */
+    .footer {
+      padding: 1.25rem 2.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .footer-sep {
+      width: 3px;
+      height: 3px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+    }
+
+    .footer-link {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--emas-terang);
+    }
+
+    /* ============ PARTICLES ============ */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--emas-terang);
+      border-radius: 50%;
+      opacity: 0;
+      animation: particle-rise var(--dur, 6s) ease-out var(--delay, 0s) infinite;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 900px) {
+      .cards-wrapper {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+      }
+      .stats-row {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+      }
+      .stat-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+      }
+      .stat-item:last-child { border-bottom: none; }
+      .hero-ring, .hero-ring-2 { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .header { padding: 1rem 1.25rem; }
+      .hero { padding: 2rem 1.25rem 1rem; }
+      .hero-title { font-size: 1.9rem; }
+      .bottom-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .bottom-banner-left { flex-direction: column; text-align: center; }
+      .wayang-left, .wayang-right { display: none; }
+      .footer { flex-direction: column; gap: 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Layer -->
+  <div class="bg-layer">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Wayang Ornaments -->
+  <div class="wayang-left">
+    <img src="/static/svg/wayang.svg" alt="" style="width:100%; height:auto; filter: sepia(1) saturate(0.5) brightness(0.6);">
+  </div>
+  <div class="wayang-right">
+    <img src="/static/svg/wayang.svg" alt="" style="width:100%; height:auto; transform: scaleX(-1); filter: sepia(1) saturate(0.5) brightness(0.6);">
+  </div>
+
+  <!-- Decorative Rings -->
+  <div class="hero-ring"></div>
+  <div class="hero-ring hero-ring-2"></div>
+
+  <!-- Main Wrapper -->
+  <div class="wrapper">
+
+    <!-- Header -->
+    <header class="header">
+      <a href="/" class="brand" style="text-decoration: none;">
+        <div class="brand-logo">
+          <span style="position:relative;z-index:1;">ꦗ</span>
+        </div>
+        <div>
+          <div class="brand-name">PRAMBOT</div>
+          <div class="brand-tagline">Primbon &amp; Weton Engine</div>
+        </div>
+      </a>
+      <div class="header-badge">
+        <div class="header-badge-dot"></div>
+        <span>✦ Versi 1.0 Jawa Klasik</span>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="hero">
+
+      <!-- Welcome pill -->
+      <div class="welcome-pill">
+        <span class="welcome-pill-text" style="font-family:'Lora', Georgia, serif; letter-spacing:0.06em; font-size:0.85rem;">ꦱꦸꦒꦼꦁ ꦫꦮꦸꦃ</span>
+        <div class="welcome-pill-sep"></div>
+        <span class="welcome-pill-text">Sugeng Rawuh</span>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="hero-title">
+        <span class="hero-title-line1">Perhitungan Weton</span>
+        <span class="hero-title-line1" style="font-size:0.65em; animation-delay:0.3s;">Jodoh &amp; Hari Baik Jawa</span>
+        <!-- <span class="hero-title-line2">Berbasis Ilmu Primbon Jawa — Presisi &amp; Terstruktur</span> -->
+      </h1>
+
+      <!-- Decorative divider -->
+      <div class="hero-divider">
+        <div class="hero-divider-line"></div>
+        <div class="hero-divider-ornament">✦</div>
+        <div class="hero-divider-line right"></div>
+      </div>
+
+      <!-- Description -->
+      <p class="hero-desc">
+        Kelola komputasi <strong>neptu kelahiran</strong>, analisis keselarasan pasangan <strong>(Pancasuda)</strong>, serta rekomendasi <strong>hari baik</strong> secara presisi sesuai aturan Primbon Jawa.
+      </p>
+
+      <!-- Feature Cards -->
+      <div class="cards-wrapper">
+
+        <!-- Card 1: Hitung Weton -->
+        <a href="/hitung" class="feat-card" style="text-decoration:none;">
+          <div class="feat-card-wayang"></div>
+          <span class="feat-card-num">01</span>
+          <div class="feat-card-icon-wrap">
+            <span class="feat-card-icon-emoji">🌙</span>
+          </div>
+          <div class="feat-card-title">Hitung Weton</div>
+          <div class="feat-card-desc">
+            Masukkan nama dan tanggal lahir untuk melihat weton, neptu, dan gambaran watak menurut Primbon.
+          </div>
+          <div class="feat-card-cta">
+            Mulai Hitung
+            <span class="feat-card-cta-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- Card 2: Cek Jodoh -->
+        <a href="/jodoh" class="feat-card" style="text-decoration:none;">
+          <div class="feat-card-wayang" style="transform:scaleX(-1);"></div>
+          <span class="feat-card-num">02</span>
+          <div class="feat-card-icon-wrap">
+            <span class="feat-card-icon-emoji">💖</span>
+          </div>
+          <div class="feat-card-title">Cek Jodoh</div>
+          <div class="feat-card-desc">
+            Bandingkan neptu dua orang untuk mengetahui tingkat keselarasan jodoh (Pancasuda) menurut Primbon.
+          </div>
+          <div class="feat-card-cta">
+            Cek Sekarang
+            <span class="feat-card-cta-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- Card 3: Hari Baik -->
+        <a href="/hari-baik" class="feat-card" style="text-decoration:none;">
+          <div class="feat-card-wayang"></div>
+          <span class="feat-card-num">03</span>
+          <div class="feat-card-icon-wrap">
+            <span class="feat-card-icon-emoji">📅</span>
+          </div>
+          <div class="feat-card-title">Hari Baik Acara</div>
+          <div class="feat-card-desc">
+            Cari hari baik dalam 30 hari ke depan untuk pernikahan, buka usaha, atau hajatan penting.
+          </div>
+          <div class="feat-card-cta">
+            Lihat Rekomendasi
+            <span class="feat-card-cta-arrow">→</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">7</div>
+          <div class="stat-label">Hari Pasaran</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Hari Jawa</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Presisi Primbon</div>
+        </div>
+      </div>
+
+      <!-- Bottom Banner -->
+      <div class="bottom-banner">
+        <div class="bottom-banner-left">
+          <div class="bottom-banner-icon">🪶</div>
+          <div>
+            <div class="bottom-banner-title">Arsitektur Modular &amp; OOP</div>
+            <div class="bottom-banner-desc">Dikembangkan menggunakan Python Flask dengan pemisahan Model, Service, dan Helper yang terstruktur.</div>
+          </div>
+        </div>
+        <a href="/hitung" class="bottom-banner-cta">
+          Mulai Perhitungan →
+        </a>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>Prambot Engine &copy; 2026</span>
+      <div class="footer-sep"></div>
+      <span>Perhitungan Weton, Jodoh &amp; Hari Baik</span>
+      <div class="footer-sep"></div>
+      <span>Sesuai Primbon Jawa</span>
+    </footer>
+
+  </div><!-- .wrapper -->
+
+  <script>
+    // Load animation
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+
+    // Create floating particles
+    function createParticles() {
+      const container = document.getElementById('particles');
+      const count = 20;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.bottom = Math.random() * 20 + '%';
+        p.style.setProperty('--dur', (Math.random() * 6 + 4) + 's');
+        p.style.setProperty('--delay', (Math.random() * 6) + 's');
+        p.style.width = p.style.height = (Math.random() * 2 + 1) + 'px';
+        p.style.opacity = Math.random() * 0.5 + 0.1;
+        container.appendChild(p);
+      }
+    }
+    createParticles();
+
+    // Hover ripple on cards
+    document.querySelectorAll('.feat-card').forEach(card => {
+      card.addEventListener('mouseenter', function(e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          background: rgba(201, 162, 39, 0.15);
+          border-radius: 50%;
+          top: ${e.clientY - rect.top - 10}px;
+          left: ${e.clientX - rect.left - 10}px;
+          transform: scale(0);
+          animation: rippleAnim 0.6s ease-out forwards;
+          pointer-events: none;
+          z-index: 20;
+        `;
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+  </script>
+  <style>
+    @keyframes rippleAnim {
+      to { transform: scale(12); opacity: 0; }
+    }
+  </style>
+
+</body>
+</html>

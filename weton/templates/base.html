@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5D3A1A">
+  <title>{% block title %}Prambot{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jawa.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="jawa-theme">
+
+  <!-- Corner Dekorasi -->
+  <div class="corner-decor corner-top-right"></div>
+  <div class="corner-decor corner-bottom-left"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Shimmer top line -->
+    <div class="sidebar-glow-line"></div>
+
+    <!-- Brand -->
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">ꦗ</div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-name">PRAMBOT</div>
+        <div class="sidebar-brand-sub">Primbon &amp; Weton Engine</div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+      <ul>
+        <li class="sidebar-nav-label">Menu Utama</li>
+        <li>
+          <a href="{{ url_for('landing') }}" class="{% if request.endpoint == 'landing' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Beranda
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('hitung') }}" class="{% if request.endpoint == 'hitung' or request.endpoint == 'hasil_weton' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Hitung Weton
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('jodoh') }}" class="{% if request.endpoint == 'jodoh' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            Cek Jodoh
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('hari_baik') }}" class="{% if request.endpoint == 'hari_baik' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Hari Baik
+          </a>
+        </li>
+
+        <div class="sidebar-divider"></div>
+        <li class="sidebar-nav-label">Laporan</li>
+        <li>
+          <a href="{{ url_for('laporan') }}" class="{% if request.endpoint == 'laporan' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Cetak Laporan
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Footer Sidebar -->
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-version">
+        <span>✦</span> v1.0 Jawa Klasik
+      </div>
+      <div>Prambot Engine &copy; 2026</div>
+      <div>Berbasis Primbon Jawa</div>
+    </div>
+  </aside>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-left">
+      <button class="navbar-toggle" id="sidebarToggle" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="navbar-title">Prambot</div>
+    </div>
+    <div class="navbar-right">
+      <div class="aksara-badge">
+        <span class="aksara-char">ꦥꦿꦩ꧀ꦧꦺꦴꦠ꧀</span>
+      </div>
+      <div class="user-badge">
+        <div class="user-avatar">P</div>
+        <span>Pengguna</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="mainContent">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <span class="alert-icon">{% if category == 'error' %}⚠️{% else %}✓{% endif %}</span>
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Back to Top -->
+  <a href="#" class="back-to-top" id="backToTop" title="Kembali ke atas">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </a>
+
+  <!-- Mobile overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:999; backdrop-filter:blur(2px);"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

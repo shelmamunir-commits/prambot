@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Cetak Laporan — Prambot{% endblock %}
+
+{% block content %}
+
+<div class="page-header" style="animation: fadeInDown 0.5s ease both;">
+  <div class="page-title-accent"></div>
+  <h1 class="page-title judul-primbon">Cetak Laporan Primbon</h1>
+  <p class="page-subtitle">Unduh laporan PDF lengkap dengan analisis weton dan watak sesuai Primbon Jawa.</p>
+</div>
+
+<div class="form-card" style="max-width: 560px;">
+  <div class="card batik-border" style="padding: 2rem; animation: scaleIn 0.5s ease 0.1s both;">
+
+    <div class="card-header">
+      <div class="card-icon">📄</div>
+      <div>
+        <div class="card-title">Permintaan Laporan PDF</div>
+        <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">ꦭꦥꦺꦴꦫꦤ꧀ — Laporan</div>
+      </div>
+    </div>
+
+    <div class="garis-pemisah" style="margin: 0 0 1.5rem;"></div>
+
+    <div class="card-body teks-primbon">
+
+      <p style="font-size: 0.875rem; color: var(--abu-tua); margin-bottom: 1rem;">Laporan primbon akan diunduh dalam format PDF yang mencakup:</p>
+
+      <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.75rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; background: rgba(142,90,46,0.04); border: 1px solid rgba(196,138,78,0.12); border-radius: 10px; font-size: 0.85rem; color: var(--abu-tua); animation: fadeInUp 0.3s ease 0.05s both;">
+          <span>📋</span> <span>Identitas Weton, Hari, Pasaran & Total Neptu</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; background: rgba(142,90,46,0.04); border: 1px solid rgba(196,138,78,0.12); border-radius: 10px; font-size: 0.85rem; color: var(--abu-tua); animation: fadeInUp 0.3s ease 0.10s both;">
+          <span>🌌</span> <span>Siklus Wewaran: Sadwara, Hastawara, Sangawara, Paarasan, Rakam & Pancasuda</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; background: rgba(142,90,46,0.04); border: 1px solid rgba(196,138,78,0.12); border-radius: 10px; font-size: 0.85rem; color: var(--abu-tua); animation: fadeInUp 0.3s ease 0.15s both;">
+          <span>🦚</span> <span>Rincian Wuku Pawukon: Dewa, Pohon, Burung, Gedhong, Aral, Sesaji & Kala Jaya Bumi</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; background: rgba(142,90,46,0.04); border: 1px solid rgba(196,138,78,0.12); border-radius: 10px; font-size: 0.85rem; color: var(--abu-tua); animation: fadeInUp 0.3s ease 0.20s both;">
+          <span>🎭</span> <span>Watak Kelahiran Lengkap, Kelebihan & Pantangan Hari Naas</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; background: rgba(142,90,46,0.04); border: 1px solid rgba(196,138,78,0.12); border-radius: 10px; font-size: 0.85rem; color: var(--abu-tua); animation: fadeInUp 0.3s ease 0.25s both;">
+          <span>🧭</span> <span>Panduan Karier, Hubungan Bisnis, Arah Hoki & Batu Permata</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; background: rgba(142,90,46,0.04); border: 1px solid rgba(196,138,78,0.12); border-radius: 10px; font-size: 0.85rem; color: var(--abu-tua); animation: fadeInUp 0.3s ease 0.30s both;">
+          <span>📈</span> <span>Tabel Pasang Surut Rejeki Pal Srigati (Usia 1 s.d. 96 Tahun)</span>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div style="background: rgba(201,162,39,0.06); border: 1px solid rgba(201,162,39,0.2); border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1.75rem; display:flex; gap:0.75rem; align-items:flex-start;">
+        <span style="font-size: 1rem; flex-shrink:0;">💡</span>
+        <div style="font-size: 0.8rem; color: var(--abu-tua); line-height: 1.6;">
+          Pastikan Anda telah <strong style="color:var(--sogan-dark);">menghitung weton</strong> terlebih dahulu. Laporan menggunakan data terakhir yang dihitung dalam sesi ini.
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <form method="GET" action="{{ url_for('laporan') }}" style="flex: 1;">
+          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Unduh Laporan PDF
+          </button>
+        </form>
+        <a href="{{ url_for('hitung') }}" class="btn btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Hitung Dulu
+        </a>
+        <a href="{{ url_for('index') }}" class="btn" style="background: transparent; color: var(--sogan); border: 1.5px solid rgba(196,138,78,0.4);">
+          ← Beranda
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

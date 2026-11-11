@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}Cek Jodoh Komprehensif — Prambot{% endblock %}
+
+{% block content %}
+
+<div class="page-header" style="animation: fadeInDown 0.5s ease both;">
+  <div class="page-title-accent"></div>
+  <h1 class="page-title judul-primbon">Cek Jodoh Multimetode (Primbon Jawa)</h1>
+  <p class="page-subtitle">Analisis keselarasan pasangan menggunakan 3 metode perhitungan primbon: Petung 8, Pancasuda (7), dan Petung 5.</p>
+</div>
+
+{% if profil_a %}
+
+<!-- ================= RESULT CARD JODOH ================= -->
+<div class="result-card">
+  <div class="result-card-shimmer"></div>
+  <div class="result-orb-2"></div>
+  <div class="result-card-wayang"></div>
+
+  <!-- Header Pasangan & Skor -->
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;">
+    <div>
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); margin-bottom: 0.3rem; font-weight: 600;">
+        Hasil Analisis Perjodohan
+      </div>
+      <h2 style="line-height: 1.25; margin-bottom: 0.3rem;">
+        <span>{{ nama_a }}</span>
+        <span style="margin: 0 0.5rem; opacity: 0.8; font-size: 1.2rem;">❤️</span>
+        <span>{{ nama_b }}</span>
+      </h2>
+      <div style="font-size: 0.88rem; color: var(--emas-terang); font-family: 'Lora', Georgia, serif;">
+        {{ jodoh_lengkap.profil_a.hari }} {{ jodoh_lengkap.profil_a.pasaran }} ({{ jodoh_lengkap.profil_a.total_neptu }}) &amp; {{ jodoh_lengkap.profil_b.hari }} {{ jodoh_lengkap.profil_b.pasaran }} ({{ jodoh_lengkap.profil_b.total_neptu }})
+      </div>
+    </div>
+    
+    <!-- Skor Keselarasan -->
+    <div style="background: rgba(201,162,39,0.18); border: 1.5px solid rgba(201,162,39,0.4); border-radius: 14px; padding: 0.85rem 1.4rem; text-align: center; flex-shrink: 0; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+      <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); margin-bottom: 0.2rem; font-weight: 600;">Tingkat Kecocokan</div>
+      <div class="neptu-big" style="font-size: 2.2rem !important;">{{ jodoh_lengkap.skor }}%</div>
+      <div style="font-size: 0.72rem; color: var(--emas-terang); font-weight: 600;">{{ jodoh_lengkap.tingkat }}</div>
+    </div>
+  </div>
+
+  <!-- Parameter Gabungan -->
+  <div class="result-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+    <div class="result-item">
+      <div class="label">Neptu Gabungan</div>
+      <div class="value neptu-big" style="font-size: 1.6rem !important;">{{ neptu_gabungan }}</div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">{{ jodoh_lengkap.profil_a.total_neptu }} + {{ jodoh_lengkap.profil_b.total_neptu }}</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Petung 8</div>
+      <div class="value" style="font-size: 1rem; color: {% if jodoh_lengkap.metode_8.baik %}#86efac{% else %}#fca5a5{% endif %};">
+        {{ jodoh_lengkap.metode_8.nama }}
+      </div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Sisa {{ jodoh_lengkap.metode_8.sisa }}</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Pancasuda (7)</div>
+      <div class="value" style="font-size: 1rem; color: {% if jodoh_lengkap.metode_7.baik %}#86efac{% else %}#fca5a5{% endif %};">
+        {{ jodoh_lengkap.metode_7.nama }}
+      </div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Sisa {{ jodoh_lengkap.metode_7.sisa }}</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Petung 5</div>
+      <div class="value" style="font-size: 1rem; color: {% if jodoh_lengkap.metode_5.baik %}#86efac{% else %}#fca5a5{% endif %};">
+        {{ jodoh_lengkap.metode_5.nama }}
+      </div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Sisa {{ jodoh_lengkap.metode_5.sisa }}</div>
+    </div>
+  </div>
+
+  <div class="garis-pemisah"></div>
+
+  <!-- Kesimpulan & Saran -->
+  <div class="watak-box">
+    <h4>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Kesimpulan &amp; Nasihat Primbon
+    </h4>
+    <p style="font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.95); margin-bottom: 0.6rem;">
+      {{ jodoh_lengkap.saran }}
+    </p>
+  </div>
+
+  <div class="btn-group" style="margin-top: 1.75rem;">
+    <a href="{{ url_for('jodoh') }}" class="btn btn-emas">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      Cek Pasangan Lain
+    </a>
+    <a href="{{ url_for('hari_baik') }}" class="btn" style="background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.2);">
+      📅 Cari Hari Baik Pernikahan
+    </a>
+    <a href="{{ url_for('index') }}" class="btn" style="background: transparent; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.15);">
+      ← Beranda
+    </a>
+  </div>
+</div>
+
+<!-- ================= 3 METODE PERHITUNGAN ================= -->
+<div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-bottom: 1.5rem;">
+  <!-- Metode 8 -->
+  <div class="card" style="padding: 1.5rem; animation-delay: 0.15s;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+      <span class="badge {% if jodoh_lengkap.metode_8.baik %}badge-baik{% else %}badge-kurang{% endif %}">
+        {% if jodoh_lengkap.metode_8.baik %}✓ Harmonis{% else %}⚠️ Perlu Ikhtiar{% endif %}
+      </span>
+      <span style="font-size: 0.72rem; color: var(--abu-sedang);">Metode Siklus 8</span>
+    </div>
+    <div style="font-family: 'Lora', Georgia, serif; font-size: 1.25rem; font-weight: 700; color: var(--sogan-dark); margin-bottom: 0.4rem;">
+      {{ jodoh_lengkap.metode_8.nama }}
+    </div>
+    <p style="font-size: 0.85rem; line-height: 1.65; color: var(--hitam-tua);">
+      {{ jodoh_lengkap.metode_8.makna }}
+    </p>
+  </div>
+
+  <!-- Metode 7 (Pancasuda) -->
+  <div class="card" style="padding: 1.5rem; animation-delay: 0.2s;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+      <span class="badge {% if jodoh_lengkap.metode_7.baik %}badge-baik{% else %}badge-kurang{% endif %}">
+        {% if jodoh_lengkap.metode_7.baik %}✓ Menguntungkan{% else %}⚠️ Banyak Ujian{% endif %}
+      </span>
+      <span style="font-size: 0.72rem; color: var(--abu-sedang);">Pancasuda (Siklus 7)</span>
+    </div>
+    <div style="font-family: 'Lora', Georgia, serif; font-size: 1.25rem; font-weight: 700; color: var(--sogan-dark); margin-bottom: 0.4rem;">
+      {{ jodoh_lengkap.metode_7.nama }}
+    </div>
+    <p style="font-size: 0.85rem; line-height: 1.65; color: var(--hitam-tua);">
+      {{ jodoh_lengkap.metode_7.makna }}
+    </p>
+  </div>
+
+  <!-- Metode 5 -->
+  <div class="card" style="padding: 1.5rem; animation-delay: 0.25s;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+      <span class="badge {% if jodoh_lengkap.metode_5.baik %}badge-baik{% else %}badge-kurang{% endif %}">
+        {% if jodoh_lengkap.metode_5.baik %}✓ Berkah{% else %}⚠️ Perlu Doa{% endif %}
+      </span>
+      <span style="font-size: 0.72rem; color: var(--abu-sedang);">Metode Siklus 5</span>
+    </div>
+    <div style="font-family: 'Lora', Georgia, serif; font-size: 1.25rem; font-weight: 700; color: var(--sogan-dark); margin-bottom: 0.4rem;">
+      {{ jodoh_lengkap.metode_5.nama }}
+    </div>
+    <p style="font-size: 0.85rem; line-height: 1.65; color: var(--hitam-tua);">
+      {{ jodoh_lengkap.metode_5.makna }}
+    </p>
+  </div>
+</div>
+
+<!-- ================= PERBANDINGAN WATAK PASANGAN ================= -->
+<div class="card batik-border" style="padding: 1.75rem; margin-bottom: 2rem; animation-delay: 0.3s;">
+  <div class="card-header" style="margin-bottom: 1.25rem;">
+    <div class="card-icon">👥</div>
+    <div>
+      <div class="card-title">Perbandingan Watak &amp; Kepribadian Pasangan</div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">Titik temu karakter batiniah kedua belah pihak</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+    <!-- Orang Pertama -->
+    <div style="background: var(--krema); border: 1px solid var(--krema-tua); border-radius: 14px; padding: 1.35rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <span style="font-family: 'Lora', Georgia, serif; font-size: 1.1rem; font-weight: 700; color: var(--sogan-dark);">{{ nama_a }}</span>
+        <span class="badge badge-neutral">{{ jodoh_lengkap.profil_a.hari }} {{ jodoh_lengkap.profil_a.pasaran }} ({{ jodoh_lengkap.profil_a.total_neptu }})</span>
+      </div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-bottom: 0.75rem;">
+        Wuku {{ jodoh_lengkap.profil_a.wuku }} &bull; {{ jodoh_lengkap.profil_a.paarasan.nama }} &bull; {{ jodoh_lengkap.profil_a.rakam.nama }}
+      </div>
+      <p style="font-size: 0.86rem; line-height: 1.7; color: var(--hitam-tua);">
+        {{ watak_a }}
+      </p>
+    </div>
+
+    <!-- Orang Kedua -->
+    <div style="background: var(--krema); border: 1px solid var(--krema-tua); border-radius: 14px; padding: 1.35rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <span style="font-family: 'Lora', Georgia, serif; font-size: 1.1rem; font-weight: 700; color: var(--sogan-dark);">{{ nama_b }}</span>
+        <span class="badge badge-neutral">{{ jodoh_lengkap.profil_b.hari }} {{ jodoh_lengkap.profil_b.pasaran }} ({{ jodoh_lengkap.profil_b.total_neptu }})</span>
+      </div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-bottom: 0.75rem;">
+        Wuku {{ jodoh_lengkap.profil_b.wuku }} &bull; {{ jodoh_lengkap.profil_b.paarasan.nama }} &bull; {{ jodoh_lengkap.profil_b.rakam.nama }}
+      </div>
+      <p style="font-size: 0.86rem; line-height: 1.7; color: var(--hitam-tua);">
+        {{ watak_b }}
+      </p>
+    </div>
+  </div>
+</div>
+
+{% else %}
+
+<!-- Form Card -->
+<div class="form-card" style="max-width: 640px;">
+  <div class="card batik-border" style="padding: 2rem; animation: scaleIn 0.5s ease 0.1s both;">
+
+    <div class="card-header">
+      <div class="card-icon">💞</div>
+      <div>
+        <div class="card-title">Form Cek Jodoh Komprehensif</div>
+        <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">Perhitungan Petung 8, Pancasuda 7, dan Petung 5 Tradisi Jawa</div>
+      </div>
+    </div>
+
+    <div class="garis-pemisah" style="margin: 0 0 1.5rem;"></div>
+
+    <div class="card-body">
+      <form method="POST" action="{{ url_for('jodoh') }}">
+
+        <!-- Orang Pertama -->
+        <div style="background: rgba(142,90,46,0.04); border: 1px solid rgba(196,138,78,0.15); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.25rem; animation: fadeInUp 0.4s ease 0.15s both;">
+          <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--abu-sedang); font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>👤</span> Orang Pertama
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="nama_a">Nama</label>
+              <input type="text" id="nama_a" name="nama_a" class="form-control" placeholder="Contoh: Rina Santosa" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="tanggal_a">Tanggal Lahir</label>
+              <input type="date" id="tanggal_a" name="tanggal_a" class="form-control" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector -->
+        <div style="text-align: center; margin: -0.25rem 0 0.75rem; font-size: 1.5rem; animation: fadeIn 0.4s ease 0.25s both;">
+          ❤️
+        </div>
+
+        <!-- Orang Kedua -->
+        <div style="background: rgba(142,90,46,0.04); border: 1px solid rgba(196,138,78,0.15); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem; animation: fadeInUp 0.4s ease 0.3s both;">
+          <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--abu-sedang); font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>👤</span> Orang Kedua
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="nama_b">Nama</label>
+              <input type="text" id="nama_b" name="nama_b" class="form-control" placeholder="Contoh: Hartono Wibowo" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="tanggal_b">Tanggal Lahir</label>
+              <input type="date" id="tanggal_b" name="tanggal_b" class="form-control" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-group" style="animation: fadeInUp 0.4s ease 0.35s both;">
+          <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            Hitung Keselarasan Jodoh
+          </button>
+          <a href="/" class="btn btn-ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Batal
+          </a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% endblock %}

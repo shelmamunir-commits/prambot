@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Hari Baik Acara — Prambot{% endblock %}
+
+{% block content %}
+
+<div class="page-header" style="animation: fadeInDown 0.5s ease both;">
+  <div class="page-title-accent"></div>
+  <h1 class="page-title judul-primbon">Rekomendasi Hari Baik Acara</h1>
+  <p class="page-subtitle">Analisis kecocokan tanggal acara serta rekomendasi 30 hari ke depan berdasarkan kaidah Primbon Jawa &amp; Pawukon.</p>
+</div>
+
+{% if evaluasi_lengkap %}
+
+<!-- ================= RESULT CARD HARI ACARA ================= -->
+<div class="result-card">
+  <div class="result-card-shimmer"></div>
+  <div class="result-orb-2"></div>
+  <div class="result-card-wayang"></div>
+
+  <div style="margin-bottom: 1.5rem;">
+    <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); margin-bottom: 0.3rem; font-weight: 600;">
+      Analisis Tanggal Acara
+    </div>
+    <h2 style="line-height: 1.25; margin-bottom: 0.2rem;">Acara: {{ tujuan }}</h2>
+    <div style="font-size: 0.88rem; color: var(--emas-terang); font-family: 'Lora', Georgia, serif;">
+      Pemilik: {{ nama }} ({{ evaluasi_lengkap.pemilik.hari }} {{ evaluasi_lengkap.pemilik.pasaran }}, Neptu {{ evaluasi_lengkap.pemilik.total_neptu }})
+    </div>
+  </div>
+
+  <div class="result-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+    <div class="result-item">
+      <div class="label">Tanggal Acara</div>
+      <div class="value" style="font-size: 0.95rem;">{{ tanggal_acara }}</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Weton Acara</div>
+      <div class="value" style="font-size: 0.95rem;">{{ evaluasi_lengkap.profil_acara.hari }} {{ evaluasi_lengkap.profil_acara.pasaran }}</div>
+      <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Neptu {{ evaluasi_lengkap.profil_acara.total_neptu }}</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Wuku Acara</div>
+      <div class="value" style="font-size: 0.95rem;">{{ evaluasi_lengkap.profil_acara.wuku }}</div>
+    </div>
+    <div class="result-item">
+      <div class="label">Kategori Petung</div>
+      <div class="value" style="font-size: 0.95rem; color: {% if 'BAIK' in analisis %}#86efac{% else %}#fca5a5{% endif %};">
+        {{ evaluasi_lengkap.profil_acara.paarasan.nama }}
+      </div>
+    </div>
+  </div>
+
+  <div class="garis-pemisah"></div>
+
+  <!-- Ulasan Analisis -->
+  <div class="watak-box">
+    <h4>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Evaluasi Keselamatan Acara
+    </h4>
+    <p style="font-size: 0.88rem; line-height: 1.7; color: rgba(255,255,255,0.95);">
+      {{ analisis }}
+    </p>
+  </div>
+
+  <div class="btn-group" style="margin-top: 1.75rem;">
+    <a href="{{ url_for('hari_baik') }}" class="btn btn-emas">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      Cari Tanggal Lain
+    </a>
+    <a href="{{ url_for('index') }}" class="btn" style="background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.2);">
+      ← Beranda
+    </a>
+  </div>
+</div>
+
+<!-- ================= HARI TERBAIK REKOMENDASI ================= -->
+{% if evaluasi_lengkap.daftar_terbaik %}
+<div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem; animation-delay: 0.2s;">
+  <div class="card-header" style="margin-bottom: 1.25rem;">
+    <div class="card-icon">🌟</div>
+    <div>
+      <div class="card-title">Tanggal Pilihan Terbaik (8 Hari Terbaik)</div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">Hari-hari yang berenergi Sri, Lungguh, atau Gedhong bebas dari Naas</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+    {% for h in evaluasi_lengkap.daftar_terbaik %}
+    <div style="background: var(--krema); border: 1.5px solid rgba(61,122,84,0.25); border-radius: 12px; padding: 1.1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--sogan-dark);">{{ h.tanggal.strftime('%d %B %Y') }}</span>
+        <span class="badge badge-baik">✓ {{ h.kategori }}</span>
+      </div>
+      <div style="font-family: 'Lora', Georgia, serif; font-size: 1rem; font-weight: 700; color: var(--sogan);">
+        {{ h.weton }}
+      </div>
+      <div style="font-size: 0.75rem; color: var(--abu-tua); margin-top: 0.2rem;">
+        Wuku {{ h.wuku }} &bull; Neptu {{ h.neptu }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- ================= TABEL 30 HARI KE DEPAN ================= -->
+<div class="card batik-border" style="padding: 1.75rem; margin-bottom: 2rem; animation-delay: 0.25s;">
+  <div class="card-header" style="margin-bottom: 1.25rem;">
+    <div class="card-icon">📆</div>
+    <div>
+      <div class="card-title">Daftar Lengkap 30 Hari ke Depan</div>
+      <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">Pemetaan status hari: Sangat Baik, Cukup, atau Dihindari</div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Weton &amp; Neptu</th>
+          <th>Wuku</th>
+          <th>Kategori Petung</th>
+          <th>Status Rekomendasi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for h in evaluasi_lengkap.daftar_30 %}
+        <tr>
+          <td style="font-weight: 600; color: var(--sogan-dark);">
+            {{ h.tanggal.strftime('%d %b %Y') }}
+          </td>
+          <td>
+            <span style="font-family: 'Lora', Georgia, serif; font-weight: 600; color: var(--hitam-tua);">{{ h.weton }}</span>
+            <span style="font-size: 0.75rem; color: var(--abu-sedang);">({{ h.neptu }})</span>
+          </td>
+          <td style="color: var(--abu-tua); font-size: 0.85rem;">
+            {{ h.wuku }}
+          </td>
+          <td>
+            <span style="font-weight: 500; color: var(--sogan);">{{ h.kategori }}</span>
+          </td>
+          <td>
+            <span class="badge {{ h.status_kelas }}">
+              {{ h.status }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% else %}
+
+<!-- Form Card -->
+<div class="form-card" style="max-width: 600px;">
+  <div class="card batik-border" style="padding: 2rem; animation: scaleIn 0.5s ease 0.1s both;">
+
+    <div class="card-header">
+      <div class="card-icon">📅</div>
+      <div>
+        <div class="card-title">Form Hari Baik Acara</div>
+        <div style="font-size: 0.75rem; color: var(--abu-sedang); margin-top: 2px;">Kalkulator Hari Baik Primbon Jawa &amp; Pawukon 30 Hari</div>
+      </div>
+    </div>
+
+    <div class="garis-pemisah" style="margin: 0 0 1.5rem;"></div>
+
+    <div class="card-body">
+      <form method="POST" action="{{ url_for('hari_baik') }}">
+
+        <div class="form-group anim-delay-1" style="animation: fadeInUp 0.4s ease 0.15s both;">
+          <label class="form-label" for="nama">
+            <span class="form-label-icon">👤</span>
+            Nama Pemilik Profil
+          </label>
+          <input type="text" id="nama" name="nama" class="form-control"
+                 placeholder="Contoh: Rina Santosa" required>
+        </div>
+
+        <div class="form-row" style="animation: fadeInUp 0.4s ease 0.2s both;">
+          <div class="form-group">
+            <label class="form-label" for="tanggal_lahir">
+              <span class="form-label-icon">🎂</span>
+              Tanggal Lahir
+            </label>
+            <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="tanggal_acara">
+              <span class="form-label-icon">📆</span>
+              Tanggal Acara
+            </label>
+            <input type="date" id="tanggal_acara" name="tanggal_acara" class="form-control">
+            <div class="form-hint">Bisa dikosongkan untuk mencari 30 hari ke depan</div>
+          </div>
+        </div>
+
+        <div class="form-group" style="animation: fadeInUp 0.4s ease 0.25s both;">
+          <label class="form-label" for="tujuan_acara">
+            <span class="form-label-icon">🎯</span>
+            Tujuan Acara
+          </label>
+          <input type="text" id="tujuan_acara" name="tujuan_acara" class="form-control"
+                 placeholder="Contoh: Pernikahan, Buka Usaha, Khitanan, Pindah Rumah" required>
+          <div class="form-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Sebutkan jenis hajat yang direncanakan
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div style="background: rgba(142,90,46,0.06); border: 1px solid rgba(196,138,78,0.2); border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1.5rem; display:flex; gap:0.75rem; align-items:flex-start; animation: fadeInUp 0.4s ease 0.3s both;">
+          <span style="font-size: 1rem; flex-shrink:0;">🔭</span>
+          <div style="font-size: 0.8rem; color: var(--abu-tua); line-height: 1.6;">
+            <strong style="color: var(--sogan-dark);">Metode Komprehensif:</strong> Sistem menganalisis kecocokan neptu pemilik dengan neptu hari acara, mendeteksi hari naas, serta memberikan 8 hari rekomendasi terbaik bebas dari pantangan.
+          </div>
+        </div>
+
+        <div class="btn-group" style="animation: fadeInUp 0.4s ease 0.35s both;">
+          <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Cari Hari Baik Acara
+          </button>
+          <a href="/" class="btn btn-ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Batal
+          </a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% endblock %}

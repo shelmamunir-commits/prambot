@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Hitung Weton — Prambot{% endblock %}
+
+{% block content %}
+<div class="page-header" style="animation: fadeInDown 0.5s ease both;">
+  <div class="page-title-accent"></div>
+  <h1 class="page-title judul-primbon">Hitung Weton</h1>
+  <p class="page-subtitle">Masukkan nama dan tanggal lahir untuk menentukan weton, neptu, dan gambaran watak Anda.</p>
+</div>
+
+<div class="form-card">
+  <div class="card batik-border" style="padding: 2rem; animation: scaleIn 0.5s ease 0.1s both;">
+
+    <!-- Card Header -->
+    <div class="card-header">
+      <div class="card-icon">🔮</div>
+      <div>
+        <div class="card-title">Form Input Weton</div>
+        <div style="font-size:0.75rem; color: var(--abu-sedang); margin-top: 2px;">ꦮꦺꦠꦺꦴꦤ꧀ — Weton</div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="garis-pemisah" style="margin: 0 0 1.5rem;"></div>
+
+    <div class="card-body">
+      <form method="POST" action="{{ url_for('hitung') }}">
+
+        <div class="form-group anim-delay-1" style="animation: fadeInUp 0.4s ease 0.15s both;">
+          <label class="form-label" for="nama">
+            <span class="form-label-icon">👤</span>
+            Nama Lengkap
+          </label>
+          <input type="text" id="nama" name="nama" class="form-control"
+                 placeholder="Contoh: Rina Putri Santosa" required
+                 autocomplete="name">
+          <div class="form-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Gunakan nama sesuai akta lahir atau nama panggilan
+          </div>
+        </div>
+
+        <div class="form-group anim-delay-2" style="animation: fadeInUp 0.4s ease 0.25s both;">
+          <label class="form-label" for="tanggal_lahir">
+            <span class="form-label-icon">📅</span>
+            Tanggal Lahir
+          </label>
+          <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control" required>
+          <div class="form-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Pastikan tanggal lahir yang dimasukkan sudah benar
+          </div>
+        </div>
+
+        <!-- Info box -->
+        <div style="background: rgba(142,90,46,0.06); border: 1px solid rgba(196,138,78,0.2); border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1.5rem; display:flex; gap:0.75rem; align-items:flex-start; animation: fadeInUp 0.4s ease 0.3s both;">
+          <span style="font-size: 1rem; flex-shrink:0;">✨</span>
+          <div style="font-size: 0.8rem; color: var(--abu-tua); line-height: 1.6;">
+            <strong style="color: var(--sogan-dark);">Cara kerja:</strong> Sistem akan menghitung hari kelahiran dalam kalender Jawa, menentukan pasaran, dan menghitung total neptu sesuai tabel Primbon.
+          </div>
+        </div>
+
+        <div class="btn-group" style="animation: fadeInUp 0.4s ease 0.35s both;">
+          <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Hitung Weton
+          </button>
+          <a href="/" class="btn btn-ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Batal
+          </a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Help note -->
+  <div style="text-align: center; margin-top: 1rem; font-size: 0.75rem; color: var(--abu-sedang);">
+    Butuh bantuan? Pastikan tanggal lahir dalam format yang benar.
+  </div>
+</div>
+{% endblock %}

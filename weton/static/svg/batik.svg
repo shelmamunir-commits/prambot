@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <pattern id="parang" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M0 20 Q20 0 40 20 T80 20" stroke="#7B3F00" stroke-width="2" fill="none" opacity="0.4"/>
+      <path d="M20 0 Q40 20 20 40 T20 80" stroke="#7B3F00" stroke-width="2" fill="none" opacity="0.4"/>
+    </pattern>
+  </defs>
+  <rect width="200" height="200" fill="#F5F5DC"/>
+  <rect width="200" height="200" fill="url(#parang)"/>
+</svg>

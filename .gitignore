@@ -1,0 +1,26 @@
+# Cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment & Konfigurasi Lokal
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# File Temporer & Sampah OS (Mac / Windows)
+__MACOSX/
+.DS_Store
+Thumbs.db
+
+# Output PDF & File Sementara Flask
+tmp/
+*.pdf
+instance/
+
+# IDE & Editor
+.vscode/
+.idea/

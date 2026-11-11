@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Siluet wayang kulit stylized (dekorasi halus) -->
+  <path d="M60 10 C50 10 45 20 48 30 L40 50 L55 65 L60 90 L65 65 L80 50 L72 30 C75 20 70 10 60 10 Z" fill="#2B1B10" opacity="0.25"/>
+  <path d="M60 30 C55 30 52 35 53 42 L50 55 L60 70 L70 55 L67 42 C68 35 65 30 60 30 Z" fill="#7B3F00" opacity="0.3"/>
+  <!-- Aksara Jawa stylized "Ha" -->
+  <path d="M30 100 Q35 85 45 95 Q55 105 65 100" stroke="#7B3F00" stroke-width="3" fill="none" opacity="0.3"/>
+</svg>
