@@ -27,10 +27,14 @@ class PerhitunganWeton(ABC):
 
     def __init__(self, id_kalkulasi: str, tanggal_lahir: date,
                  profil: ProfilWeton, katalog: KatalogPasaran):
-        if not id_kalkulasi:
+        if not isinstance(id_kalkulasi, str):
+            raise TypeError("id_kalkulasi harus berupa teks (string).")
+        if not id_kalkulasi.strip():
             raise ValueError("id_kalkulasi wajib diisi.")
-        if not valid_tanggal(tanggal_lahir):
-            raise ValueError("Tanggal lahir tidak valid.")
+
+        # valid_tanggal akan melempar TypeError atau ValueError jika tanggal tidak sesuai
+        valid_tanggal(tanggal_lahir)
+
         if not isinstance(profil, ProfilWeton):
             raise TypeError("profil harus bertipe ProfilWeton.")
         if not isinstance(katalog, KatalogPasaran):
@@ -41,12 +45,17 @@ class PerhitunganWeton(ABC):
         self._profil = profil
         self._katalog = katalog
 
-        # Konversi tanggal lahir masehi ke kalender Jawa secara otomatis
-        self._j_date = JavaneseDate().fromDate(
-            tanggal_lahir.year,
-            tanggal_lahir.month,
-            tanggal_lahir.day
-        )
+        # Konversi tanggal lahir masehi ke kalender Jawa secara otomatis dengan pengaman
+        try:
+            self._j_date = JavaneseDate().fromDate(
+                tanggal_lahir.year,
+                tanggal_lahir.month,
+                tanggal_lahir.day
+            )
+        except ValueError as ve:
+            raise ValueError(f"Tanggal {tanggal_lahir} tidak valid untuk konversi kalender Jawa: {ve}")
+        except Exception as err:
+            raise RuntimeError(f"Gagal mengonversi tanggal ke kalender Jawa: {err}")
 
         # Sinkronisasi hasil konversi JavaneseDate ke atribut profil weton
         self._singkronkan_profil()
@@ -63,8 +72,11 @@ class PerhitunganWeton(ABC):
 
     def _singkronkan_profil(self):
         """Memperbarui data profil weton berdasarkan hasil konversi JavaneseDate."""
-        dina_nama_raw = self._j_date.dina.name
-        pasaran_nama = self._j_date.pasaran.name
+        try:
+            dina_nama_raw = self._j_date.dina.name
+            pasaran_nama = self._j_date.pasaran.name
+        except AttributeError as err:
+            raise AttributeError(f"Objek JavaneseDate tidak memiliki atribut dina/pasaran yang lengkap: {err}")
 
         # Normalisasi nama hari (misal "Rebo" -> "Rabu", "Jemah" -> "Jumat")
         dina_nama = MAP_HARI_JAWA.get(dina_nama_raw, dina_nama_raw)
@@ -124,10 +136,13 @@ class PerhitunganWeton(ABC):
 
     def ringkasan(self) -> str:
         """Memakai method abstrak: hasilnya berbeda tiap subclass."""
-        weton_str = self._j_date.format("%D %P, %d %M %Y")
-        return (f"[{self._id_kalkulasi}] Weton: {weton_str} | "
-                f"neptu={self.hitung_neptu()} | "
-                f"{self.analisis_karakter()}")
+        try:
+            weton_str = self._j_date.format("%D %P, %d %M %Y")
+            return (f"[{self._id_kalkulasi}] Weton: {weton_str} | "
+                    f"neptu={self.hitung_neptu()} | "
+                    f"{self.analisis_karakter()}")
+        except Exception as err:
+            raise RuntimeError(f"Gagal menyusun ringkasan perhitungan weton: {err}")
 
     def __str__(self):
         return f"{type(self).__name__}({self._id_kalkulasi})"
