@@ -23,7 +23,6 @@ class KomponenNeptu:
     def total_neptu(self) -> int:
         return self._nilai_hari + self._nilai_pasaran
 
-    # --- operator overloading ---
     def __add__(self, other):
         """neptu(A) + neptu(B) -> int (total gabungan untuk Pancasuda)."""
         if isinstance(other, KomponenNeptu):
